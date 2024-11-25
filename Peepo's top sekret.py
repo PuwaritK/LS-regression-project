@@ -15,7 +15,7 @@ def retrieve_data():
 def prep_data() -> list[list[float]]:
     # import data from .csv file
     df = pd.read_csv(
-        "C://Users//Peepo//.cache//kagglehub//datasets//beridzeg45//apartment-prices//versions//2//Apartment Prices.csv"
+        "C://Users//Nigga//.cache//kagglehub//datasets//beridzeg45//apartment-prices//versions//2//Apartment Prices.csv"
     )
 
     # set seed to always random the same point when running the file.
@@ -33,6 +33,14 @@ def prep_data() -> list[list[float]]:
     return [x1, x2, y]
 
 
+def calculate_sum_of_squared_errors(y_i: list[float], y_hat: list[float]) -> float:
+
+    sse = 0
+    for i in range(len(y_hat)):
+        sse += (y_i[i] - y_hat[i]) ** 2
+    return sse
+
+
 def calculate_r_square(y_i: list[float], y_hat: list[float]) -> float:
     y_bar: float = sum(y_i) / len(y_i)
 
@@ -45,6 +53,17 @@ def calculate_r_square(y_i: list[float], y_hat: list[float]) -> float:
         ss_res += (y_i[i] - y_hat[i]) ** 2
 
     return (ss_tot - ss_res) / ss_tot
+
+
+def calculate_root_mean_square_error(y_i: list[float], y_hat: list[float]) -> float:
+    n = len(y_i)
+
+    mse = 0
+    for i in range(n):
+        mse += ((y_hat[i] - y_i[i]) ** 2) / n
+
+    rmse = mse**0.5
+    return rmse
 
 
 def linear_regression(x: list[float], y: list[float]) -> tuple[float, float]:
@@ -144,6 +163,22 @@ def main():
 
     ax2_rsquare = calculate_r_square(y2, y_hat2)
     ax2.text(4, 50, f"R^2 = {ax2_rsquare}")
+
+    # sse
+    print(
+        f"Sum of squared errors of linear regression model's x1 is {calculate_sum_of_squared_errors(y1,y_hat1)}"
+    )
+    print(
+        f"Sum of squared errors of linear regression model's x2 is {calculate_sum_of_squared_errors(y2,y_hat2)}"
+    )
+
+    # rmse
+    print(
+        f"Root mean square error of linear regression model's x1 is {calculate_root_mean_square_error(y1, y_hat1)}"
+    )
+    print(
+        f"Root mean square error of linear regression model's x2 is {calculate_root_mean_square_error(y2, y_hat2)}\n"
+    )
     # -------------------------------------------------------------------------------
 
     # Polynomial Regression Degree 2
@@ -181,6 +216,22 @@ def main():
 
     ax4_rsquare = calculate_r_square(y2, PR_y_hat2)
     ax4.text(4, 50, f"R^2 = {ax4_rsquare}")
+
+    # sse
+    print(
+        f"Sum of squared errors of polynomial regression degree 2 model's x1 is {calculate_sum_of_squared_errors(y1,PR_y_hat1)}"
+    )
+    print(
+        f"Sum of squared errors of polynomial regression degree 2 model's x2 is {calculate_sum_of_squared_errors(y2,PR_y_hat2)}"
+    )
+
+    # rmse
+    print(
+        f"Root mean square error of polynomial regression degree 2 model's x1 is {calculate_root_mean_square_error(y1, PR_y_hat1)}"
+    )
+    print(
+        f"Root mean square error of polynomial regression degree 2 model's x2 is {calculate_root_mean_square_error(y2, PR_y_hat2)}\n"
+    )
     # -------------------------------------------------------------------------------
 
     # Exponential
@@ -245,6 +296,22 @@ def main():
     )
     ax7.set_xlabel("Area (Square Meters)")
     ax7.set_ylabel("Price (Georgian Lari)")
+
+    # sse
+    print(
+        f"Sum of squared errors of exponential regression model's x1 is {calculate_sum_of_squared_errors(y1,ECF_y_hat1)}"
+    )
+    print(
+        f"Sum of squared errors of exponential regression model's x2 is {calculate_sum_of_squared_errors(y2,ECF_y_hat2)}"
+    )
+
+    # rmse
+    print(
+        f"Root mean square error of exponential regression model's x1 is {calculate_root_mean_square_error(y1, ECF_y_hat1)}"
+    )
+    print(
+        f"Root mean square error of exponential regression model's x2 is {calculate_root_mean_square_error(y2, ECF_y_hat2)}\n"
+    )
 
     # display linear regression figure
     plt.show()
