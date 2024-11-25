@@ -22,7 +22,7 @@ def prep_data() -> list[list[float]]:
     # the data picked is still random.
     random.seed(69)
 
-    # sample 100 data points from 7259 records
+    # sample 300 data points from 7259 records
     record_numbers = random.sample(range(0, 7258), k=DATA_POINTS)
     record = df.loc[record_numbers, ["PRICE (GEL)", "Area", "Rooms"]]
 
